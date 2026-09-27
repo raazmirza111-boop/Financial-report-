@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FINANCIAL REPORT - SAHI JAMA MASJID</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f3f4f6;
+  color:#222;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:15px;
+}
+
+.header{
+  background:#7b1e1e;
+  color:white;
+  text-align:center;
+  padding:18px 10px;
+  border-radius:10px;
+  margin-bottom:15px;
+}
+
+.header h1{margin:0;font-size:30px}
+.header h2{margin:7px 0;font-size:24px}
+.header p{margin:4px 0;font-size:15px}
+
+.card{
+  background:white;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:15px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.filters{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+input,select,textarea,button{font-size:15px}
+
+input,select,textarea{
+  width:100%;
+  padding:10px;
+  border:1px solid #aaa;
+  border-radius:6px;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+button{
+  padding:10px 14px;
+  border:0;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
+  margin:4px;
+}
+
+.btn{background:#7b1e1e;color:white}
+.btn2{background:#1d4ed8;color:white}
+.btn3{background:#15803d;color:white}
+.btn4{background:#b91c1c;color:white}
+.btn5{background:#555;color:white}
+
+.summary{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.summaryBox{
+  padding:15px;
+  border-radius:8px;
+  text-align:center;
+  background:#eee;
+}
+
+.summaryBox h3{margin:0 0 8px}
+.summaryBox strong{font-size:22px}
+
+.tableWrap{overflow-x:auto}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  min-width:850px;
+}
+
+th,td{
+  border:1px solid #777;
+  padding:8px;
+  text-align:left;
+}
+
+th{
+  background:#ddd;
+  text-align:center;
+}
+
+td.amount{text-align:right}
+
+.actions{
+  text-align:center;
+  white-space:nowrap;
+}
+
+.empty{
+  text-align:center;
+  padding:25px;
+  color:#666;
+}
+
+/* LOGIN */
+
+#loginScreen{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:15px;
+  background:#f3f4f6;
+}
+
+.loginBox{
+  width:100%;
+  max-width:430px;
+  background:white;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 3px 15px rgba(0,0,0,.15);
+}
+
+.loginBox h1{
+  text-align:center;
+  color:#7b1e1e;
+  margin-top:0;
+}
+
+.loginBox h2{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.loginBox input{
+  margin-bottom:12px;
+}
+
+.loginMsg{
+  text-align:center;
+  margin:10px 0;
+  font-weight:bold;
+  min-height:20px;
+}
+
+.userBar{
+  background:#fff;
+  padding:10px 15px;
+  border-radius:8px;
+  margin-bottom:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.userEmail{
+  font-weight:bold;
+  color:#7b1e1e;
+  word-break:break-all;
+}
+
+.logoutBtn{
+  background:#b91c1c;
+  color:white;
+  padding:8px 12px;
+  margin:0;
+}
+
+@media(max-width:800px){
+  .filters{grid-template-columns:1fr 1fr}
+  .summary{grid-template-columns:1fr}
+  .header h1{font-size:24px}
+  .header h2{font-size:20px}
+}
+
+@media(max-width:500px){
+  .filters{grid-template-columns:1fr}
+  .container{padding:8px}
+  button{width:100%;margin:4px 0}
+  .userBar{
+    flex-direction:column;
+    align-items:stretch;
+    text-align:center;
+  }
+}
+
+@media print{
+  .noPrint{display:none!important}
+  body{background:white}
+  .container{max-width:none}
+  .card{box-shadow:none}
+  table{min-width:0}
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN SCREEN -->
+
+<div id="loginScreen">
+
+  <div class="loginBox">
+
+    <h1>SAHI JAMA MASJID</h1>
+    <h2>Financial Report</h2>
+
+    <div id="loginForm">
+
+      <label>Email</label>
+      <input
+        type="email"
+        id="loginEmail"
+        placeholder="Enter your email"
+        autocomplete="email"
+      >
+
+      <label>Password</label>
+      <input
+        type="password"
+        id="loginPassword"
+        placeholder="Enter password"
+        autocomplete="current-password"
+      >
+
+      <button class="btn" onclick="loginUser()">
+        Login
+      </button>
+
+      <button class="btn3" onclick="signupUser()">
+        Create New Account
+      </button>
+
+      <button class="btn5" onclick="resetPassword()">
+        Forgot Password?
+      </button>
+
+      <div id="loginMsg" class="loginMsg"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- MAIN APPLICATION -->
+
+<div id="appScreen" style="display:none;">
+
+<div class="container">
+
+  <div class="userBar noPrint">
+
+    <div>
+      Logged in as:
+      <span id="userEmail" class="userEmail"></span>
+    </div>
+
+    <button class="logoutBtn" onclick="logoutUser()">
+      Logout
+    </button>
+
+  </div>
+
+  <div class="header">
+    <h1>FINANCIAL REPORT</h1>
+    <h2>SAHI JAMA MASJID</h2>
+    <p>Financial Statement & Accounts</p>
+    <p>Address / Mobile Details</p>
+  </div>
+
+  <div class="card noPrint">
+
+    <div class="filters">
+
+      <div>
+        <label>Financial Year</label>
+
+        <select id="financialYear">
+          <option value="2026-27">2026-27</option>
+          <option value="2025-26">2025-26</option>
+          <option value="2027-28">2027-28</option>
+          <option value="2028-29">2028-29</option>
+        </select>
+      </div>
+
+      <div>
+        <label>From Date</label>
+        <input type="date" id="fromDate">
+      </div>
+
+      <div>
+        <label>To Date</label>
+        <input type="date" id="toDate">
+      </div>
+
+      <div>
+        <label>Month</label>
+
+        <select id="monthFilter">
+          <option value="">All Months</option>
+          <option value="0">January</option>
+          <option value="1">February</option>
+          <option value="2">March</option>
+          <option value="3">April</option>
+          <option value="4">May</option>
+          <option value="5">June</option>
+          <option value="6">July</option>
+          <option value="7">August</option>
+          <option value="8">September</option>
+          <option value="9">October</option>
+          <option value="10">November</option>
+          <option value="11">December</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div style="margin-top:10px;">
+
+      <button class="btn" onclick="applyFilters()">
+        Apply Filter
+      </button>
+
+      <button class="btn5" onclick="clearFilters()">
+        Clear Filter
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="card noPrint">
+
+    <h3>Add Financial Entry</h3>
+
+    <div class="filters">
+
+      <div>
+        <label>Date</label>
+        <input type="date" id="entryDate">
+      </div>
+
+      <div>
+        <label>Type</label>
+
+        <select id="entryType">
+          <option value="Income">Income</option>
+          <option value="Expenditure">Expenditure</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Particulars</label>
+
+        <input
+          type="text"
+          id="particulars"
+          placeholder="Enter particulars"
+        >
+      </div>
+
+      <div>
+        <label>Amount (₹)</label>
+
+        <input
+          type="number"
+          id="amount"
+          min="0"
+          step="0.01"
+          placeholder="Enter amount"
+        >
+      </div>
+
+    </div>
+
+    <div style="margin-top:10px;">
+
+      <label>Remarks</label>
+
+      <textarea
+        id="remarks"
+        placeholder="Optional remarks"
+      ></textarea>
+
+    </div>
+
+    <div style="margin-top:10px;">
+
+      <button class="btn3" onclick="addEntry()">
+        Add Entry
+      </button>
+
+      <button class="btn5" onclick="clearForm()">
+        Clear
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="summary">
+
+      <div class="summaryBox">
+        <h3>Total Income</h3>
+        <strong id="totalIncome">₹0.00</strong>
+      </div>
+
+      <div class="summaryBox">
+        <h3>Total Expenditure</h3>
+        <strong id="totalExpense">₹0.00</strong>
+      </div>
+
+      <div class="summaryBox">
+        <h3>Balance</h3>
+        <strong id="balance">₹0.00</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="tableWrap">
+
+      <table id="reportTable">
+
+        <thead>
+
+          <tr>
+            <th>Sl.</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Particulars</th>
+            <th>Income (₹)</th>
+            <th>Expenditure (₹)</th>
+            <th>Remarks</th>
+            <th class="noPrint">Action</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="tableBody"></tbody>
+
+      </table>
+
+      <div id="emptyMessage" class="empty">
+        No financial entries found.
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card noPrint">
+
+    <h3>Reports & Data</h3>
+
+    <button class="btn2" onclick="window.print()">
+      Print / Save PDF
+    </button>
+
+    <button class="btn3" onclick="exportCSV()">
+      Export CSV / Excel
+    </button>
+
+    <button class="btn5" onclick="downloadBackup()">
+      Backup Data
+    </button>
+
+    <button
+      class="btn5"
+      onclick="document.getElementById('restoreFile').click()"
+    >
+      Restore Backup
+    </button>
+
+    <input
+      type="file"
+      id="restoreFile"
+      accept=".json"
+      style="display:none"
+      onchange="restoreBackup(event)"
+    >
+
+    <button class="btn4" onclick="deleteAllData()">
+      Delete All Data
+    </button>
+
+  </div>
+
+</div>
+</div>
+
+
+<!-- FIREBASE -->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+
+<script>
+
+/* FIREBASE CONFIG */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDeDqQFSvXFAD9n40x6ZMO_9174goeMo_8",
+  authDomain: "financial-report-d9d09.firebaseapp.com",
+  projectId: "financial-report-d9d09",
+  storageBucket: "financial-report-d9d09.firebasestorage.app",
+  messagingSenderId: "507294834926",
+  appId: "1:507294834926:web:7d273a70885f212d5e53ff"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+
+
+/* GLOBAL VARIABLES */
+
+let currentUser = null;
+let entries = [];
+let filteredEntries = [];
+
+let today = new Date().toISOString().split("T")[0];
+
+
+/* LOGIN STATUS */
+
+auth.onAuthStateChanged(function(user){
+
+  if(user){
+
+    currentUser = user;
+
+    document.getElementById("loginScreen").style.display = "none";
+
+    document.getElementById("appScreen").style.display = "block";
+
+    document.getElementById("userEmail").textContent = user.email;
+
+    loadUserData();
+
+  }else{
+
+    currentUser = null;
+
+    document.getElementById("loginScreen").style.display = "flex";
+
+    document.getElementById("appScreen").style.display = "none";
+
+  }
+
+});
+
+
+/* SIGN UP */
+
+function signupUser(){
+
+  const email =
+    document.getElementById("loginEmail").value.trim();
+
+  const password =
+    document.getElementById("loginPassword").value;
+
+  const msg =
+    document.getElementById("loginMsg");
+
+
+  if(!email){
+
+    msg.textContent = "Please enter your email.";
+
+    return;
+
+  }
+
+  if(password.length < 6){
+
+    msg.textContent =
+      "Password must be at least 6 characters.";
+
+    return;
+
+  }
+
+
+  msg.textContent = "Creating account...";
+
+
+  auth.createUserWithEmailAndPassword(
+    email,
+    password
+  )
+  .then(function(){
+
+    msg.textContent =
+      "Account created successfully.";
+
+  })
+  .catch(function(error){
+
+    msg.textContent =
+      getFirebaseError(error);
+
+  });
+
+}
+
+
+/* LOGIN */
+
+function loginUser(){
+
+  const email =
+    document.getElementById("loginEmail").value.trim();
+
+  const password =
+    document.getElementById("loginPassword").value;
+
+  const msg =
+    document.getElementById("loginMsg");
+
+
+  if(!email){
+
+    msg.textContent = "Please enter your email.";
+
+    return;
+
+  }
+
+  if(!password){
+
+    msg.textContent = "Please enter your password.";
+
+    return;
+
+  }
+
+
+  msg.textContent = "Logging in...";
+
+
+  auth.signInWithEmailAndPassword(
+    email,
+    password
+  )
+  .then(function(){
+
+    msg.textContent = "";
+
+  })
+  .catch(function(error){
+
+    msg.textContent =
+      getFirebaseError(error);
+
+  });
+
+}
+
+
+/* LOGOUT */
+
+function logoutUser(){
+
+  if(!confirm("Do you want to logout?")){
+
+    return;
+
+  }
+
+  auth.signOut();
+
+}
+
+
+/* FORGOT PASSWORD */
+
+function resetPassword(){
+
+  const email =
+    document.getElementById("loginEmail").value.trim();
+
+  const msg =
+    document.getElementById("loginMsg");
+
+
+  if(!email){
+
+    msg.textContent =
+      "Enter your email first.";
+
+    return;
+
+  }
+
+
+  msg.textContent =
+    "Sending password reset email...";
+
+
+  auth.sendPasswordResetEmail(email)
+    .then(function(){
+
+      msg.textContent =
+        "Password reset email sent.";
+
+    })
+    .catch(function(error){
+
+      msg.textContent =
+        getFirebaseError(error);
+
+    });
+
+}
+
+
+/* FIREBASE ERROR MESSAGE */
+
+function getFirebaseError(error){
+
+  if(error.code === "auth/email-already-in-use"){
+    return "This email is already registered.";
+  }
+
+  if(error.code === "auth/invalid-email"){
+    return "Invalid email address.";
+  }
+
+  if(error.code === "auth/weak-password"){
+    return "Password is too weak. Use at least 6 characters.";
+  }
+
+  if(error.code === "auth/invalid-credential"){
+    return "Email or password is incorrect.";
+  }
+
+  if(error.code === "auth/user-not-found"){
+    return "No account found with this email.";
+  }
+
+  if(error.code === "auth/wrong-password"){
+    return "Incorrect password.";
+  }
+
+  return error.message || "Something went wrong.";
+
+}
+
+
+/* USER-SPECIFIC LOCAL DATA */
+
+function getStorageKey(){
+
+  if(!currentUser){
+
+    return null;
+
+  }
+
+  return "financialReportData_" + currentUser.uid;
+
+}
+
+
+/* LOAD USER DATA */
+
+function loadUserData(){
+
+  const key = getStorageKey();
+
+  entries = JSON.parse(
+    localStorage.getItem(key) || "[]"
+  );
+
+  filteredEntries = [...entries];
+
+  const entryDate =
+    document.getElementById("entryDate");
+
+  if(entryDate){
+
+    entryDate.value = today;
+
+  }
+
+  applyFilters();
+
+}
+
+
+/* SAVE USER DATA */
+
+function saveData(){
+
+  const key = getStorageKey();
+
+  if(!key){
+
+    return;
+
+  }
+
+  localStorage.setItem(
+    key,
+    JSON.stringify(entries)
+  );
+
+}
+
+
+/* ADD ENTRY */
+
+function addEntry(){
+
+  const date =
+    document.getElementById("entryDate").value;
+
+  const type =
+    document.getElementById("entryType").value;
+
+  const particulars =
+    document.getElementById("particulars").value.trim();
+
+  const amount =
+    parseFloat(
+      document.getElementById("amount").value
+    );
+
+  const remarks =
+    document.getElementById("remarks").value.trim();
+
+
+  if(!date){
+
+    alert("Please select date.");
+
+    return;
+
+  }
+
+  if(!particulars){
+
+    alert("Please enter particulars.");
+
+    return;
+
+  }
+
+  if(!amount || amount <= 0){
+
+    alert("Please enter a valid amount.");
+
+    return;
+
+  }
+
+
+  const item = {
+
+    id: Date.now(),
+
+    date,
+
+    type,
+
+    particulars,
+
+    amount,
+
+    remarks
+
+  };
+
+
+  entries.push(item);
+
+  saveData();
+
+  clearForm();
+
+  applyFilters();
+
+  alert("Entry saved successfully.");
+
+}
+
+
+/* DISPLAY */
+
+function renderTable(){
+
+  const tbody =
+    document.getElementById("tableBody");
+
+  const empty =
+    document.getElementById("emptyMessage");
+
+
+  tbody.innerHTML = "";
+
+
+  if(filteredEntries.length === 0){
+
+    empty.style.display = "block";
+
+  }else{
+
+    empty.style.display = "none";
+
+  }
+
+
+  let income = 0;
+
+  let expense = 0;
+
+
+  filteredEntries.forEach((item,index)=>{
+
+    const tr =
+      document.createElement("tr");
+
+
+    let incomeAmount = "";
+
+    let expenseAmount = "";
+
+
+    if(item.type === "Income"){
+
+      income += Number(item.amount);
+
+      incomeAmount =
+        Number(item.amount).toFixed(2);
+
+    }else{
+
+      expense += Number(item.amount);
+
+      expenseAmount =
+        Number(item.amount).toFixed(2);
+
+    }
+
+
+    tr.innerHTML = `
+
+      <td style="text-align:center">
+        ${index+1}
+      </td>
+
+      <td>
+        ${formatDate(item.date)}
+      </td>
+
+      <td>
+        ${escapeHTML(item.type)}
+      </td>
+
+      <td>
+        ${escapeHTML(item.particulars)}
+      </td>
+
+      <td class="amount">
+        ${incomeAmount}
+      </td>
+
+      <td class="amount">
+        ${expenseAmount}
+      </td>
+
+      <td>
+        ${escapeHTML(item.remarks || "")}
+      </td>
+
+      <td class="actions noPrint">
+
+        <button
+          class="btn2"
+          onclick="editEntry(${item.id})"
+        >
+          Edit
+        </button>
+
+        <button
+          class="btn4"
+          onclick="deleteEntry(${item.id})"
+        >
+          Delete
+        </button>
+
+      </td>
+
+    `;
+
+
+    tbody.appendChild(tr);
+
+  });
+
+
+  const balance =
+    income - expense;
+
+
+  document.getElementById("totalIncome").textContent =
+    "₹" + income.toFixed(2);
+
+
+  document.getElementById("totalExpense").textContent =
+    "₹" + expense.toFixed(2);
+
+
+  document.getElementById("balance").textContent =
+    "₹" + balance.toFixed(2);
+
+}
+
+
+/* FILTER */
+
+function applyFilters(){
+
+  const from =
+    document.getElementById("fromDate").value;
+
+  const to =
+    document.getElementById("toDate").value;
+
+  const month =
+    document.getElementById("monthFilter").value;
+
+
+  filteredEntries =
+    entries.filter(item=>{
+
+      const d =
+        new Date(item.date + "T00:00:00");
+
+
+      if(from && item.date < from){
+
+        return false;
+
+      }
+
+
+      if(to && item.date > to){
+
+        return false;
+
+      }
+
+
+      if(
+        month !== "" &&
+        d.getMonth() !== Number(month)
+      ){
+
+        return false;
+
+      }
+
+
+      return true;
+
+    });
+
+
+  filteredEntries.sort(
+    (a,b)=>
+      new Date(a.date) -
+      new Date(b.date)
+  );
+
+
+  renderTable();
+
+}
+
+
+/* CLEAR FILTER */
+
+function clearFilters(){
+
+  document.getElementById("fromDate").value = "";
+
+  document.getElementById("toDate").value = "";
+
+  document.getElementById("monthFilter").value = "";
+
+  filteredEntries = [...entries];
+
+  renderTable();
+
+}
+
+
+/* CLEAR FORM */
+
+function clearForm(){
+
+  document.getElementById("entryDate").value =
+    today;
+
+  document.getElementById("entryType").value =
+    "Income";
+
+  document.getElementById("particulars").value =
+    "";
+
+  document.getElementById("amount").value =
+    "";
+
+  document.getElementById("remarks").value =
+    "";
+
+}
+
+
+/* DELETE */
+
+function deleteEntry(id){
+
+  if(!confirm("Delete this entry?")){
+
+    return;
+
+  }
+
+
+  entries =
+    entries.filter(
+      item=>item.id !== id
+    );
+
+
+  saveData();
+
+  applyFilters();
+
+}
+
+
+/* EDIT */
+
+function editEntry(id){
+
+  const item =
+    entries.find(
+      x=>x.id === id
+    );
+
+
+  if(!item){
+
+    return;
+
+  }
+
+
+  document.getElementById("entryDate").value =
+    item.date;
+
+  document.getElementById("entryType").value =
+    item.type;
+
+  document.getElementById("particulars").value =
+    item.particulars;
+
+  document.getElementById("amount").value =
+    item.amount;
+
+  document.getElementById("remarks").value =
+    item.remarks;
+
+
+  entries =
+    entries.filter(
+      x=>x.id !== id
+    );
+
+
+  saveData();
+
+  applyFilters();
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* DELETE ALL */
+
+function deleteAllData(){
+
+  if(entries.length === 0){
+
+    alert("There is no data to delete.");
+
+    return;
+
+  }
+
+
+  if(
+    confirm(
+      "Are you sure you want to permanently delete all local data?"
+    )
+  ){
+
+    entries = [];
+
+    saveData();
+
+    applyFilters();
+
+  }
+
+}
+
+
+/* DATE FORMAT */
+
+function formatDate(date){
+
+  const d =
+    new Date(date + "T00:00:00");
+
+
+  return d.toLocaleDateString(
+    "en-IN",
+    {
+      day:"2-digit",
+      month:"2-digit",
+      year:"numeric"
+    }
+  );
+
+}
+
+
+/* HTML SECURITY */
+
+function escapeHTML(text){
+
+  return String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* CSV EXPORT */
+
+function exportCSV(){
+
+  if(filteredEntries.length === 0){
+
+    alert("No data available for export.");
+
+    return;
+
+  }
+
+
+  let csv =
+    "Sl,Date,Type,Particulars,Income,Expenditure,Remarks\n";
+
+
+  filteredEntries.forEach((item,index)=>{
+
+    const income =
+      item.type === "Income"
+        ? item.amount
+        : "";
+
+
+    const expense =
+      item.type === "Expenditure"
+        ? item.amount
+        : "";
+
+
+    csv += [
+
+      index+1,
+      item.date,
+      item.type,
+      csvSafe(item.particulars),
+      income,
+      expense,
+      csvSafe(item.remarks || "")
+
+    ].join(",") + "\n";
+
+  });
+
+
+  const blob =
+    new Blob(
+      [csv],
+      {type:"text/csv;charset=utf-8;"}
+    );
+
+
+  const url =
+    URL.createObjectURL(blob);
+
+
+  const a =
+    document.createElement("a");
+
+
+  a.href = url;
+
+  a.download =
+    "Financial_Report.csv";
+
+
+  a.click();
+
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+function csvSafe(value){
+
+  value =
+    String(value).replace(/"/g,'""');
+
+  return `"${value}"`;
+
+}
+
+
+/* BACKUP */
+
+function downloadBackup(){
+
+  const data =
+    JSON.stringify(
+      entries,
+      null,
+      2
+    );
+
+
+  const blob =
+    new Blob(
+      [data],
+      {type:"application/json"}
+    );
+
+
+  const url =
+    URL.createObjectURL(blob);
+
+
+  const a =
+    document.createElement("a");
+
+
+  a.href = url;
+
+  a.download =
+    "Financial_Report_Backup.json";
+
+
+  a.click();
+
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+/* RESTORE */
+
+function restoreBackup(event){
+
+  const file =
+    event.target.files[0];
+
+
+  if(!file){
+
+    return;
+
+  }
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload =
+    function(e){
+
+      try{
+
+        const data =
+          JSON.parse(e.target.result);
+
+
+        if(!Array.isArray(data)){
+
+          throw new Error("Invalid backup");
+
+        }
+
+
+        entries = data;
+
+        saveData();
+
+        applyFilters();
+
+
+        alert(
+          "Backup restored successfully."
+        );
+
+
+      }catch(error){
+
+        alert(
+          "Invalid backup file."
+        );
+
+      }
+
+    };
+
+
+  reader.readAsText(file);
+
+}
+
+</script>
+
+</body>
+</html>
