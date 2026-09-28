@@ -1,0 +1,2565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FINANCIAL REPORT - SAHI JAMA MASJID</title>
+  <link rel="manifest" href="manifest.json">
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f3f4f6;
+  color:#222;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:15px;
+}
+
+.header{
+  background:#7b1e1e;
+  color:white;
+  text-align:center;
+  padding:18px 10px;
+  border-radius:10px;
+  margin-bottom:15px;
+}
+
+.header h1{margin:0;font-size:30px}
+.header h2{margin:7px 0;font-size:24px}
+.header p{margin:4px 0;font-size:15px}
+
+.card{
+  background:white;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:15px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.filters{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+input,select,textarea,button{font-size:15px}
+
+input,select,textarea{
+  width:100%;
+  padding:10px;
+  border:1px solid #aaa;
+  border-radius:6px;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+button{
+  padding:10px 14px;
+  border:0;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
+  margin:4px;
+}
+
+.btn{background:#7b1e1e;color:white}
+.btn2{background:#1d4ed8;color:white}
+.btn3{background:#15803d;color:white}
+.btn4{background:#b91c1c;color:white}
+.btn5{background:#555;color:white}
+
+.summary{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.summaryBox{
+  padding:15px;
+  border-radius:8px;
+  text-align:center;
+  background:#eee;
+}
+
+.summaryBox h3{margin:0 0 8px}
+.summaryBox strong{font-size:22px}
+
+.tableWrap{overflow-x:auto}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  min-width:850px;
+}
+
+th,td{
+  border:1px solid #777;
+  padding:8px;
+  text-align:left;
+}
+
+th{
+  background:#ddd;
+  text-align:center;
+}
+
+td.amount{text-align:right}
+
+.actions{
+  text-align:center;
+  white-space:nowrap;
+}
+
+.empty{
+  text-align:center;
+  padding:25px;
+  color:#666;
+}
+
+/* LOGIN */
+
+#loginScreen{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:15px;
+  background:#f3f4f6;
+}
+
+.loginBox{
+  width:100%;
+  max-width:430px;
+  background:white;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 3px 15px rgba(0,0,0,.15);
+}
+
+.loginBox h1{
+  text-align:center;
+  color:#7b1e1e;
+  margin-top:0;
+}
+
+.loginBox h2{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.loginBox input{
+  margin-bottom:12px;
+}
+
+.loginMsg{
+  text-align:center;
+  margin:10px 0;
+  font-weight:bold;
+  min-height:20px;
+}
+
+.userBar{
+  background:#fff;
+  padding:10px 15px;
+  border-radius:8px;
+  margin-bottom:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.userEmail{
+  font-weight:bold;
+  color:#7b1e1e;
+  word-break:break-all;
+}
+
+.logoutBtn{
+  background:#b91c1c;
+  color:white;
+  padding:8px 12px;
+  margin:0;
+}
+
+/* VIEWER */
+
+.viewerNotice{
+  background:#e0f2fe;
+  color:#075985;
+  padding:10px;
+  border-radius:8px;
+  margin-bottom:15px;
+  text-align:center;
+  font-weight:bold;
+}
+
+.viewerMode .adminOnly{
+  display:none !important;
+}
+
+@media(max-width:800px){
+  .filters{grid-template-columns:1fr 1fr}
+  .summary{grid-template-columns:1fr}
+  .header h1{font-size:24px}
+  .header h2{font-size:20px}
+}
+
+@media(max-width:500px){
+  .filters{grid-template-columns:1fr}
+  .container{padding:8px}
+  button{width:100%;margin:4px 0}
+  .userBar{
+    flex-direction:column;
+    align-items:stretch;
+    text-align:center;
+  }
+}
+
+@media print{
+  .noPrint{display:none!important}
+  body{background:white}
+  .container{max-width:none}
+  .card{box-shadow:none}
+  table{min-width:0}
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN SCREEN -->
+
+<div id="loginScreen">
+
+  <div class="loginBox">
+
+    <h1>SAHI JAMA MASJID</h1>
+    <h2>Financial Report</h2>
+
+    <div id="loginForm">
+
+      <label>Email</label>
+
+      <input
+        type="email"
+        id="loginEmail"
+        placeholder="Enter your email"
+        autocomplete="email"
+      >
+
+      <label>Password</label>
+
+      <input
+        type="password"
+        id="loginPassword"
+        placeholder="Enter password"
+        autocomplete="current-password"
+      >
+
+      <button class="btn" onclick="loginUser()">
+        Login
+      </button>
+
+      <button class="btn3" onclick="signupUser()">
+        Create New Account
+      </button>
+
+      <button class="btn5" onclick="resetPassword()">
+        Forgot Password?
+      </button>
+
+      <div id="loginMsg" class="loginMsg"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- MAIN APPLICATION -->
+
+<div id="appScreen" style="display:none;">
+
+<div class="container">
+
+  <div class="userBar noPrint adminOnly">
+
+    <div>
+      Logged in as:
+      <span id="userEmail" class="userEmail"></span>
+    </div>
+
+    <button class="logoutBtn" onclick="logoutUser()">
+      Logout
+    </button>
+
+  </div>
+
+  <div id="viewerNotice" class="viewerNotice" style="display:none;">
+    VIEWER MODE — Financial Report is Read Only
+  </div>
+
+  <div class="header">
+
+    <h1>FINANCIAL REPORT</h1>
+
+    <h2>SAHI JAMA MASJID</h2>
+
+    <p>Financial Statement & Accounts</p>
+
+    <p>Address / Mobile Details</p>
+
+  </div>
+
+
+  <!-- FILTER -->
+
+  <div class="card noPrint">
+
+    <div class="filters">
+
+      <div>
+        <label>Financial Year</label>
+
+        <select id="financialYear" onchange="onFinancialYearChange()">
+          <option value="">All Years</option>
+        </select>
+      </div>
+
+
+      <div>
+
+        <label>From Date</label>
+
+        <input
+          type="date"
+          id="fromDate"
+        >
+
+      </div>
+
+
+      <div>
+
+        <label>To Date</label>
+
+        <input
+          type="date"
+          id="toDate"
+        >
+
+      </div>
+
+
+      <div>
+
+        <label>Month</label>
+
+        <select id="monthFilter">
+
+          <option value="">All Months</option>
+          <option value="0">January</option>
+          <option value="1">February</option>
+          <option value="2">March</option>
+          <option value="3">April</option>
+          <option value="4">May</option>
+          <option value="5">June</option>
+          <option value="6">July</option>
+          <option value="7">August</option>
+          <option value="8">September</option>
+          <option value="9">October</option>
+          <option value="10">November</option>
+          <option value="11">December</option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+
+    <div style="margin-top:10px;">
+
+      <button
+        class="btn"
+        onclick="applyFilters()"
+      >
+        Apply Filter
+      </button>
+
+      <button
+        class="btn5"
+        onclick="clearFilters()"
+      >
+        Clear Filter
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ADD ENTRY -->
+
+  <div class="card noPrint adminOnly">
+
+    <h3>Add Financial Entry</h3>
+
+    <div class="filters">
+
+      <div>
+
+        <label>Date</label>
+
+        <input
+          type="date"
+          id="entryDate"
+        >
+
+      </div>
+
+
+      <div>
+
+        <label>Type</label>
+
+        <select id="entryType">
+
+          <option value="Income">
+            Income
+          </option>
+
+          <option value="Expenditure">
+            Expenditure
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div>
+
+        <label>Particulars</label>
+
+        <input
+          type="text"
+          id="particulars"
+          placeholder="Enter particulars"
+        >
+
+      </div>
+
+
+      <div>
+
+        <label>Amount (₹)</label>
+
+        <input
+          type="number"
+          id="amount"
+          min="0"
+          step="0.01"
+          placeholder="Enter amount"
+        >
+
+      </div>
+
+    </div>
+
+
+    <div style="margin-top:10px;">
+
+      <label>Remarks</label>
+
+      <textarea
+        id="remarks"
+        placeholder="Optional remarks"
+      ></textarea>
+
+    </div>
+
+
+    <div style="margin-top:10px;">
+
+      <button
+        class="btn3"
+        onclick="addEntry()"
+      >
+        Add Entry
+      </button>
+
+      <button
+        class="btn5"
+        onclick="clearForm()"
+      >
+        Clear
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- SUMMARY -->
+
+  <div class="card">
+
+    <div class="summary">
+
+      <div class="summaryBox">
+
+        <h3>Total Income</h3>
+
+        <strong id="totalIncome">
+          ₹0.00
+        </strong>
+
+      </div>
+
+
+      <div class="summaryBox">
+
+        <h3>Total Expenditure</h3>
+
+        <strong id="totalExpense">
+          ₹0.00
+        </strong>
+
+      </div>
+
+
+      <div class="summaryBox">
+
+        <h3>Balance</h3>
+
+        <strong id="balance">
+          ₹0.00
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- TABLE -->
+
+  <div class="card">
+
+    <div class="tableWrap">
+
+      <table id="reportTable">
+
+        <thead>
+
+          <tr>
+
+            <th>Sl.</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Particulars</th>
+            <th>Income (₹)</th>
+            <th>Expenditure (₹)</th>
+            <th>Remarks</th>
+
+            <th class="noPrint adminOnly">
+              Action
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="tableBody"></tbody>
+
+      </table>
+
+
+      <div
+        id="emptyMessage"
+        class="empty"
+      >
+        No financial entries found.
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- REPORTS -->
+
+  <div class="card noPrint adminOnly">
+
+    <h3>Reports & Data</h3>
+
+
+    <button
+      class="btn2"
+      onclick="window.print()"
+    >
+      Print / Save PDF
+    </button>
+
+
+    <button
+      class="btn3"
+      onclick="exportCSV()"
+    >
+      Export CSV / Excel
+    </button>
+
+
+    <button
+      class="btn5"
+      onclick="downloadBackup()"
+    >
+      Backup Data
+    </button>
+
+
+    <button
+      class="btn5"
+      onclick="document.getElementById('restoreFile').click()"
+    >
+      Restore Backup
+    </button>
+
+
+    <input
+      type="file"
+      id="restoreFile"
+      accept=".json"
+      style="display:none"
+      onchange="restoreBackup(event)"
+    >
+
+
+    <button
+      class="btn4"
+      onclick="deleteAllData()"
+    >
+      Delete All Data
+    </button>
+
+  </div>
+
+</div>
+
+</div>
+
+
+<!-- FIREBASE -->
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+
+<script>
+
+/* ================================
+   FIREBASE CONFIG
+================================ */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyDeDqQFSvXFAD9n40x6ZMO_9174goeMo_8",
+
+  authDomain:
+    "financial-report-d9d09.firebaseapp.com",
+
+  projectId:
+    "financial-report-d9d09",
+
+  storageBucket:
+    "financial-report-d9d09.firebasestorage.app",
+
+  messagingSenderId:
+    "507294834926",
+
+  appId:
+    "1:507294834926:web:7d273a70885f212d5e53ff"
+
+};
+
+
+firebase.initializeApp(firebaseConfig);
+
+
+const auth =
+  firebase.auth();
+
+
+const db =
+  firebase.firestore();
+
+
+/* ================================
+   SETTINGS
+================================ */
+
+const ADMIN_EMAIL =
+  "raazmirza111@gmail.com";
+
+
+const isViewer =
+  new URLSearchParams(window.location.search)
+    .get("view") === "1";
+
+
+/* ================================
+   GLOBAL VARIABLES
+================================ */
+
+let currentUser = null;
+
+let entries = [];
+
+let filteredEntries = [];
+
+let editingId = null;
+
+let today =
+  new Date()
+    .toISOString()
+    .split("T")[0];
+
+
+/* ================================
+   DYNAMIC FINANCIAL YEARS (2015+)
+================================ */
+
+function initFinancialYears(){
+  const select = document.getElementById("financialYear");
+  if(!select) return;
+
+  const startYear = 2015;
+  const currentYear = new Date().getFullYear();
+  const endYear = currentYear + 5;
+
+  select.innerHTML = '<option value="">All Years</option>';
+
+  for(let y = endYear; y >= startYear; y--){
+    const nextY = String(y + 1).slice(-2);
+    const fyValue = `${y}-${nextY}`;
+    const opt = document.createElement("option");
+    opt.value = fyValue;
+    opt.textContent = fyValue;
+    select.appendChild(opt);
+  }
+}
+
+function onFinancialYearChange(){
+  const fy = document.getElementById("financialYear").value;
+  if(!fy){
+    document.getElementById("fromDate").value = "";
+    document.getElementById("toDate").value = "";
+  } else {
+    const start = fy.split("-")[0];
+    const end = Number(start) + 1;
+    document.getElementById("fromDate").value = `${start}-04-01`;
+    document.getElementById("toDate").value = `${end}-03-31`;
+  }
+  applyFilters();
+}
+
+initFinancialYears();
+
+
+/* ================================
+   START VIEWER
+================================ */
+
+if(isViewer){
+
+  document.body.classList.add("viewerMode");
+
+  document.getElementById(
+    "loginScreen"
+  ).style.display = "none";
+
+  document.getElementById(
+    "appScreen"
+  ).style.display = "block";
+
+  document.getElementById(
+    "viewerNotice"
+  ).style.display = "block";
+
+  loadViewerData();
+
+}
+
+
+/* ================================
+   LOGIN STATUS
+================================ */
+
+auth.onAuthStateChanged(function(user){
+
+  if(isViewer){
+
+    return;
+
+  }
+
+
+  if(user){
+
+    currentUser = user;
+
+    document.getElementById(
+      "loginScreen"
+    ).style.display = "none";
+
+    document.getElementById(
+      "appScreen"
+    ).style.display = "block";
+
+    document.getElementById(
+      "userEmail"
+    ).textContent = user.email;
+
+
+    if(
+      user.email &&
+      user.email.toLowerCase() ===
+      ADMIN_EMAIL.toLowerCase()
+    ){
+
+      loadAdminData();
+
+    }else{
+
+      alert(
+        "This account is not the Admin account."
+      );
+
+      auth.signOut();
+
+    }
+
+  }else{
+
+    currentUser = null;
+
+    document.getElementById(
+      "loginScreen"
+    ).style.display = "flex";
+
+    document.getElementById(
+      "appScreen"
+    ).style.display = "none";
+
+  }
+
+});
+
+
+/* ================================
+   SIGN UP
+================================ */
+
+function signupUser(){
+
+  const email =
+    document.getElementById(
+      "loginEmail"
+    ).value.trim();
+
+  const password =
+    document.getElementById(
+      "loginPassword"
+    ).value;
+
+  const msg =
+    document.getElementById(
+      "loginMsg"
+    );
+
+
+  if(!email){
+
+    msg.textContent =
+      "Please enter your email.";
+
+    return;
+
+  }
+
+
+  if(
+    password.length < 6
+  ){
+
+    msg.textContent =
+      "Password must be at least 6 characters.";
+
+    return;
+
+  }
+
+
+  msg.textContent =
+    "Creating account...";
+
+
+  auth.createUserWithEmailAndPassword(
+    email,
+    password
+  )
+
+  .then(function(){
+
+    msg.textContent =
+      "Account created successfully.";
+
+  })
+
+  .catch(function(error){
+
+    msg.textContent =
+      getFirebaseError(error);
+
+  });
+
+}
+
+
+/* ================================
+   LOGIN
+================================ */
+
+function loginUser(){
+
+  const email =
+    document.getElementById(
+      "loginEmail"
+    ).value.trim();
+
+  const password =
+    document.getElementById(
+      "loginPassword"
+    ).value;
+
+  const msg =
+    document.getElementById(
+      "loginMsg"
+    );
+
+
+  if(!email){
+
+    msg.textContent =
+      "Please enter your email.";
+
+    return;
+
+  }
+
+
+  if(!password){
+
+    msg.textContent =
+      "Please enter your password.";
+
+    return;
+
+  }
+
+
+  msg.textContent =
+    "Logging in...";
+
+
+  auth.signInWithEmailAndPassword(
+    email,
+    password
+  )
+
+  .then(function(){
+
+    msg.textContent = "";
+
+  })
+
+  .catch(function(error){
+
+    msg.textContent =
+      getFirebaseError(error);
+
+  });
+
+}
+
+
+/* ================================
+   LOGOUT
+================================ */
+
+function logoutUser(){
+
+  if(
+    !confirm(
+      "Do you want to logout?"
+    )
+  ){
+
+    return;
+
+  }
+
+  auth.signOut();
+
+}
+
+
+/* ================================
+   FORGOT PASSWORD
+================================ */
+
+function resetPassword(){
+
+  const email =
+    document.getElementById(
+      "loginEmail"
+    ).value.trim();
+
+  const msg =
+    document.getElementById(
+      "loginMsg"
+    );
+
+
+  if(!email){
+
+    msg.textContent =
+      "Enter your email first.";
+
+    return;
+
+  }
+
+
+  msg.textContent =
+    "Sending password reset email...";
+
+
+  auth.sendPasswordResetEmail(email)
+
+  .then(function(){
+
+    msg.textContent =
+      "Password reset email sent.";
+
+  })
+
+  .catch(function(error){
+
+    msg.textContent =
+      getFirebaseError(error);
+
+  });
+
+}
+
+
+/* ================================
+   FIREBASE ERROR
+================================ */
+
+function getFirebaseError(error){
+
+  if(
+    error.code ===
+    "auth/email-already-in-use"
+  ){
+
+    return "This email is already registered.";
+
+  }
+
+
+  if(
+    error.code ===
+    "auth/invalid-email"
+  ){
+
+    return "Invalid email address.";
+
+  }
+
+
+  if(
+    error.code ===
+    "auth/weak-password"
+  ){
+
+    return "Password is too weak. Use at least 6 characters.";
+
+  }
+
+
+  if(
+    error.code ===
+    "auth/invalid-credential"
+  ){
+
+    return "Email or password is incorrect.";
+
+  }
+
+
+  if(
+    error.code ===
+    "auth/user-not-found"
+  ){
+
+    return "No account found with this email.";
+
+  }
+
+
+  if(
+    error.code ===
+    "auth/wrong-password"
+  ){
+
+    return "Incorrect password.";
+
+  }
+
+
+  return (
+    error.message ||
+    "Something went wrong."
+  );
+
+}
+
+
+/* ================================
+   LOCAL STORAGE KEY
+================================ */
+
+function getStorageKey(){
+
+  if(!currentUser){
+
+    return null;
+
+  }
+
+  return (
+    "financialReportData_" +
+    currentUser.uid
+  );
+
+}
+
+
+/* ================================
+   LOAD ADMIN DATA
+================================ */
+
+async function loadAdminData(){
+
+  try{
+
+    const snapshot =
+      await db
+        .collection("financialEntries")
+        .orderBy("date","asc")
+        .get();
+
+
+    entries = [];
+
+
+    snapshot.forEach(function(doc){
+
+      const data =
+        doc.data();
+
+      entries.push({
+
+        id: doc.id,
+
+        date: data.date || "",
+
+        type: data.type || "Income",
+
+        particulars:
+          data.particulars || "",
+
+        amount:
+          Number(data.amount || 0),
+
+        remarks:
+          data.remarks || ""
+
+      });
+
+    });
+
+
+    if(
+      entries.length === 0
+    ){
+
+      const key =
+        getStorageKey();
+
+      const localData =
+        JSON.parse(
+          localStorage.getItem(key) || "[]"
+        );
+
+
+      if(
+        localData.length > 0
+      ){
+
+        const upload =
+          confirm(
+            "Firestore में अभी कोई financial entry नहीं है।\n\nमोबाइल में पुराना local data मिला है। क्या इसे Firebase Cloud में Save करना है?"
+          );
+
+
+        if(upload){
+
+          await uploadLocalData(
+            localData
+          );
+
+          return;
+
+        }
+
+      }
+
+    }
+
+
+    localStorage.setItem(
+      getStorageKey(),
+      JSON.stringify(entries)
+    );
+
+
+    document.getElementById(
+      "entryDate"
+    ).value = today;
+
+
+    applyFilters();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Firestore से data load नहीं हो सका। कृपया Internet और Firebase Rules check करें।"
+    );
+
+
+    loadLocalFallback();
+
+  }
+
+}
+
+
+/* ================================
+   VIEWER DATA
+================================ */
+
+async function loadViewerData(){
+
+  try{
+
+    const snapshot =
+      await db
+        .collection("financialEntries")
+        .orderBy("date","asc")
+        .get();
+
+
+    entries = [];
+
+
+    snapshot.forEach(function(doc){
+
+      const data =
+        doc.data();
+
+
+      entries.push({
+
+        id: doc.id,
+
+        date:
+          data.date || "",
+
+        type:
+          data.type || "Income",
+
+        particulars:
+          data.particulars || "",
+
+        amount:
+          Number(data.amount || 0),
+
+        remarks:
+          data.remarks || ""
+
+      });
+
+    });
+
+
+    filteredEntries =
+      [...entries];
+
+
+    applyFilters();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Report load नहीं हो सका। कृपया Internet connection check करें।"
+    );
+
+  }
+
+}
+
+
+/* ================================
+   OLD LOCAL DATA FALLBACK
+================================ */
+
+function loadLocalFallback(){
+
+  const key =
+    getStorageKey();
+
+
+  entries =
+    JSON.parse(
+      localStorage.getItem(key) || "[]"
+    );
+
+
+  filteredEntries =
+    [...entries];
+
+
+  document.getElementById(
+    "entryDate"
+  ).value = today;
+
+
+  applyFilters();
+
+}
+
+
+/* ================================
+   UPLOAD OLD LOCAL DATA
+================================ */
+
+async function uploadLocalData(data){
+
+  try{
+
+    const batch =
+      db.batch();
+
+
+    data.forEach(function(item){
+
+      const ref =
+        db
+          .collection("financialEntries")
+          .doc();
+
+
+      batch.set(
+        ref,
+        {
+
+          date:
+            item.date || "",
+
+          type:
+            item.type || "Income",
+
+          particulars:
+            item.particulars || "",
+
+          amount:
+            Number(item.amount || 0),
+
+          remarks:
+            item.remarks || "",
+
+          createdAt:
+            firebase.firestore.FieldValue.serverTimestamp()
+
+        }
+      );
+
+    });
+
+
+    await batch.commit();
+
+
+    alert(
+      "पुराना data Firebase Cloud में सफलतापूर्वक Save हो गया।"
+    );
+
+
+    loadAdminData();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "पुराना data Cloud में Save नहीं हो सका।"
+    );
+
+  }
+
+}
+
+
+/* ================================
+   ADD ENTRY
+================================ */
+
+async function addEntry(){
+
+  if(!currentUser){
+
+    alert(
+      "Please login as Admin."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    currentUser.email.toLowerCase() !==
+    ADMIN_EMAIL.toLowerCase()
+  ){
+
+    alert(
+      "Only Admin can add entries."
+    );
+
+    return;
+
+  }
+
+
+  const date =
+    document.getElementById(
+      "entryDate"
+    ).value;
+
+  const type =
+    document.getElementById(
+      "entryType"
+    ).value;
+
+  const particulars =
+    document.getElementById(
+      "particulars"
+    ).value.trim();
+
+  const amount =
+    parseFloat(
+      document.getElementById(
+        "amount"
+      ).value
+    );
+
+  const remarks =
+    document.getElementById(
+      "remarks"
+    ).value.trim();
+
+
+  if(!date){
+
+    alert(
+      "Please select date."
+    );
+
+    return;
+
+  }
+
+
+  if(!particulars){
+
+    alert(
+      "Please enter particulars."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !amount ||
+    amount <= 0
+  ){
+
+    alert(
+      "Please enter a valid amount."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    const data = {
+
+      date,
+
+      type,
+
+      particulars,
+
+      amount,
+
+      remarks,
+
+      createdAt:
+        firebase.firestore.FieldValue.serverTimestamp()
+
+    };
+
+
+    if(editingId){
+
+      await db
+        .collection("financialEntries")
+        .doc(editingId)
+        .update(data);
+
+
+      editingId = null;
+
+
+      alert(
+        "Entry updated successfully."
+      );
+
+
+    }else{
+
+      await db
+        .collection("financialEntries")
+        .add(data);
+
+
+      alert(
+        "Entry saved successfully in Firebase Cloud."
+      );
+
+    }
+
+
+    clearForm();
+
+    await loadAdminData();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Data Firebase में Save नहीं हुआ।\n\n" +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* ================================
+   DISPLAY TABLE
+================================ */
+
+function renderTable(){
+
+  const tbody =
+    document.getElementById(
+      "tableBody"
+    );
+
+  const empty =
+    document.getElementById(
+      "emptyMessage"
+    );
+
+
+  tbody.innerHTML = "";
+
+
+  if(
+    filteredEntries.length === 0
+  ){
+
+    empty.style.display =
+      "block";
+
+  }else{
+
+    empty.style.display =
+      "none";
+
+  }
+
+
+  let income = 0;
+
+  let expense = 0;
+
+
+  filteredEntries.forEach(
+    function(item,index){
+
+      const tr =
+        document.createElement("tr");
+
+
+      let incomeAmount = "";
+
+      let expenseAmount = "";
+
+
+      if(
+        item.type === "Income"
+      ){
+
+        income +=
+          Number(item.amount);
+
+        incomeAmount =
+          Number(item.amount)
+            .toFixed(2);
+
+      }else{
+
+        expense +=
+          Number(item.amount);
+
+        expenseAmount =
+          Number(item.amount)
+            .toFixed(2);
+
+      }
+
+
+      let actionHTML = "";
+
+
+      if(!isViewer){
+
+        actionHTML = `
+
+          <td class="actions noPrint adminOnly">
+
+            <button
+              class="btn2"
+              onclick="editEntry('${item.id}')"
+            >
+              Edit
+            </button>
+
+            <button
+              class="btn4"
+              onclick="deleteEntry('${item.id}')"
+            >
+              Delete
+            </button>
+
+          </td>
+
+        `;
+
+      }
+
+
+      tr.innerHTML = `
+
+        <td style="text-align:center">
+          ${index + 1}
+        </td>
+
+        <td>
+          ${formatDate(item.date)}
+        </td>
+
+        <td>
+          ${escapeHTML(item.type)}
+        </td>
+
+        <td>
+          ${escapeHTML(item.particulars)}
+        </td>
+
+        <td class="amount">
+          ${incomeAmount}
+        </td>
+
+        <td class="amount">
+          ${expenseAmount}
+        </td>
+
+        <td>
+          ${escapeHTML(item.remarks || "")}
+        </td>
+
+        ${actionHTML}
+
+      `;
+
+
+      tbody.appendChild(tr);
+
+    }
+  );
+
+
+  const balance =
+    income - expense;
+
+
+  document.getElementById(
+    "totalIncome"
+  ).textContent =
+    "₹" + income.toFixed(2);
+
+
+  document.getElementById(
+    "totalExpense"
+  ).textContent =
+    "₹" + expense.toFixed(2);
+
+
+  document.getElementById(
+    "balance"
+  ).textContent =
+    "₹" + balance.toFixed(2);
+
+}
+
+
+/* ================================
+   FILTER
+================================ */
+
+function applyFilters(){
+
+  const from =
+    document.getElementById(
+      "fromDate"
+    ).value;
+
+  const to =
+    document.getElementById(
+      "toDate"
+    ).value;
+
+  const month =
+    document.getElementById(
+      "monthFilter"
+    ).value;
+
+
+  filteredEntries =
+    entries.filter(
+      function(item){
+
+        const d =
+          new Date(
+            item.date +
+            "T00:00:00"
+          );
+
+
+        if(
+          from &&
+          item.date < from
+        ){
+
+          return false;
+
+        }
+
+
+        if(
+          to &&
+          item.date > to
+        ){
+
+          return false;
+
+        }
+
+
+        if(
+          month !== "" &&
+          d.getMonth() !==
+          Number(month)
+        ){
+
+          return false;
+
+        }
+
+
+        return true;
+
+      }
+    );
+
+
+  filteredEntries.sort(
+    function(a,b){
+
+      return new Date(a.date) -
+        new Date(b.date);
+
+    }
+  );
+
+
+  renderTable();
+
+}
+
+
+/* ================================
+   CLEAR FILTER
+================================ */
+
+function clearFilters(){
+
+  document.getElementById(
+    "financialYear"
+  ).value = "";
+
+  document.getElementById(
+    "fromDate"
+  ).value = "";
+
+  document.getElementById(
+    "toDate"
+  ).value = "";
+
+  document.getElementById(
+    "monthFilter"
+  ).value = "";
+
+
+  filteredEntries =
+    [...entries];
+
+
+  renderTable();
+
+}
+
+
+/* ================================
+   CLEAR FORM
+================================ */
+
+function clearForm(){
+
+  editingId = null;
+
+
+  document.getElementById(
+    "entryDate"
+  ).value = today;
+
+
+  document.getElementById(
+    "entryType"
+  ).value = "Income";
+
+
+  document.getElementById(
+    "particulars"
+  ).value = "";
+
+
+  document.getElementById(
+    "amount"
+  ).value = "";
+
+
+  document.getElementById(
+    "remarks"
+  ).value = "";
+
+}
+
+
+/* ================================
+   DELETE ENTRY
+================================ */
+
+async function deleteEntry(id){
+
+  if(isViewer){
+
+    return;
+
+  }
+
+
+  if(!confirm(
+    "Delete this entry permanently from Firebase?"
+  )){
+
+    return;
+
+  }
+
+
+  try{
+
+    await db
+      .collection("financialEntries")
+      .doc(id)
+      .delete();
+
+
+    alert(
+      "Entry deleted successfully."
+    );
+
+
+    await loadAdminData();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Entry delete नहीं हुआ।\n\n" +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* ================================
+   EDIT ENTRY
+================================ */
+
+function editEntry(id){
+
+  if(isViewer){
+
+    return;
+
+  }
+
+
+  const item =
+    entries.find(
+      function(x){
+        return x.id === id;
+      }
+    );
+
+
+  if(!item){
+
+    return;
+
+  }
+
+
+  editingId = id;
+
+
+  document.getElementById(
+    "entryDate"
+  ).value =
+    item.date;
+
+
+  document.getElementById(
+    "entryType"
+  ).value =
+    item.type;
+
+
+  document.getElementById(
+    "particulars"
+  ).value =
+    item.particulars;
+
+
+  document.getElementById(
+    "amount"
+  ).value =
+    item.amount;
+
+
+  document.getElementById(
+    "remarks"
+  ).value =
+    item.remarks || "";
+
+
+  window.scrollTo({
+
+    top:0,
+
+    behavior:"smooth"
+
+  });
+
+
+  alert(
+    "Entry edit mode में है। बदलाव करके Add Entry दबाएँ।"
+  );
+
+}
+
+
+/* ================================
+   DELETE ALL DATA
+================================ */
+
+async function deleteAllData(){
+
+  if(isViewer){
+
+    return;
+
+  }
+
+
+  if(
+    entries.length === 0
+  ){
+
+    alert(
+      "There is no data to delete."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !confirm(
+      "क्या आप Firebase Cloud से सभी financial entries permanently delete करना चाहते हैं?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  try{
+
+    const snapshot =
+      await db
+        .collection("financialEntries")
+        .get();
+
+
+    const batch =
+      db.batch();
+
+
+    snapshot.forEach(
+      function(doc){
+
+        batch.delete(doc.ref);
+
+      }
+    );
+
+
+    await batch.commit();
+
+
+    entries = [];
+
+    filteredEntries = [];
+
+
+    localStorage.removeItem(
+      getStorageKey()
+    );
+
+
+    renderTable();
+
+
+    alert(
+      "सभी financial data Firebase Cloud से delete हो गया।"
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "सारा data delete नहीं हुआ।\n\n" +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* ================================
+   DATE FORMAT
+================================ */
+
+function formatDate(date){
+
+  if(!date){
+
+    return "";
+
+  }
+
+
+  const d =
+    new Date(
+      date +
+      "T00:00:00"
+    );
+
+
+  return d.toLocaleDateString(
+    "en-IN",
+    {
+
+      day:"2-digit",
+
+      month:"2-digit",
+
+      year:"numeric"
+
+    }
+  );
+
+}
+
+
+/* ================================
+   HTML SECURITY
+================================ */
+
+function escapeHTML(text){
+
+  return String(text)
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* ================================
+   CSV EXPORT
+================================ */
+
+function exportCSV(){
+
+  if(
+    filteredEntries.length === 0
+  ){
+
+    alert(
+      "No data available for export."
+    );
+
+    return;
+
+  }
+
+
+  let csv =
+    "Sl,Date,Type,Particulars,Income,Expenditure,Remarks\n";
+
+
+  filteredEntries.forEach(
+    function(item,index){
+
+      const income =
+        item.type === "Income"
+          ? item.amount
+          : "";
+
+
+      const expense =
+        item.type === "Expenditure"
+          ? item.amount
+          : "";
+
+
+      csv += [
+
+        index + 1,
+
+        item.date,
+
+        item.type,
+
+        csvSafe(
+          item.particulars
+        ),
+
+        income,
+
+        expense,
+
+        csvSafe(
+          item.remarks || ""
+        )
+
+      ].join(",") + "\n";
+
+    }
+  );
+
+
+  const blob =
+    new Blob(
+      [csv],
+      {
+        type:
+          "text/csv;charset=utf-8;"
+      }
+    );
+
+
+  const url =
+    URL.createObjectURL(blob);
+
+
+  const a =
+    document.createElement("a");
+
+
+  a.href = url;
+
+  a.download =
+    "Financial_Report.csv";
+
+
+  a.click();
+
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+function csvSafe(value){
+
+  value =
+    String(value)
+      .replace(
+        /"/g,
+        '""'
+      );
+
+
+  return '"' + value + '"';
+
+}
+
+
+/* ================================
+   BACKUP
+================================ */
+
+function downloadBackup(){
+
+  const data =
+    JSON.stringify(
+      entries,
+      null,
+      2
+    );
+
+
+  const blob =
+    new Blob(
+      [data],
+      {
+        type:
+          "application/json"
+      }
+    );
+
+
+  const url =
+    URL.createObjectURL(blob);
+
+
+  const a =
+    document.createElement("a");
+
+
+  a.href = url;
+
+  a.download =
+    "Financial_Report_Backup.json";
+
+
+  a.click();
+
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+/* ================================
+   RESTORE BACKUP TO FIRESTORE
+================================ */
+
+async function restoreBackup(event){
+
+  if(isViewer){
+
+    return;
+
+  }
+
+
+  const file =
+    event.target.files[0];
+
+
+  if(!file){
+
+    return;
+
+  }
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload =
+    async function(e){
+
+      try{
+
+        const data =
+          JSON.parse(
+            e.target.result
+          );
+
+
+        if(
+          !Array.isArray(data)
+        ){
+
+          throw new Error(
+            "Invalid backup"
+          );
+
+        }
+
+
+        if(
+          data.length === 0
+        ){
+
+          alert(
+            "Backup file में कोई data नहीं है."
+          );
+
+          return;
+
+        }
+
+
+        if(
+          !confirm(
+            "Backup की सभी entries Firebase Cloud में जोड़ दी जाएँ?"
+          )
+        ){
+
+          return;
+
+        }
+
+
+        const batch =
+          db.batch();
+
+
+        data.forEach(
+          function(item){
+
+            const ref =
+              db
+                .collection(
+                  "financialEntries"
+                )
+                .doc();
+
+
+            batch.set(
+              ref,
+              {
+
+                date:
+                  item.date || "",
+
+                type:
+                  item.type ||
+                  "Income",
+
+                particulars:
+                  item.particulars ||
+                  "",
+
+                amount:
+                  Number(
+                    item.amount || 0
+                  ),
+
+                remarks:
+                  item.remarks ||
+                  "",
+
+                createdAt:
+                  firebase.firestore
+                    .FieldValue
+                    .serverTimestamp()
+
+              }
+            );
+
+          }
+        );
+
+
+        await batch.commit();
+
+
+        alert(
+          "Backup Firebase Cloud में restore हो गया।"
+        );
+
+
+        await loadAdminData();
+
+
+      }catch(error){
+
+        console.error(error);
+
+        alert(
+          "Backup restore नहीं हुआ।\n\n" +
+          error.message
+        );
+
+      }
+
+    };
+
+
+  reader.readAsText(file);
+
+  event.target.value = "";
+
+}
+
+</script>
+
+</body>
+</html>
