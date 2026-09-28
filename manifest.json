@@ -7,9 +7,10 @@
   "theme_color": "#0d2b45",
   "icons": [
     {
-      "src": "https://drive.google.com/file/d/19RMNRh-ehHtyeLbaQ2DaBiS6dyIFtI_I/view?usp=drivesdk",
+      "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
