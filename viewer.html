@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FINANCIAL REPORT - SAHI JAMA MASJID (VIEWER)</title>
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f3f4f6;
+  color:#222;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:15px;
+}
+
+.header{
+  background:#7b1e1e;
+  color:white;
+  text-align:center;
+  padding:18px 10px;
+  border-radius:10px;
+  margin-bottom:15px;
+}
+
+.header h1{margin:0;font-size:30px}
+.header h2{margin:7px 0;font-size:24px}
+.header p{margin:4px 0;font-size:15px}
+
+.card{
+  background:white;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:15px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.filters{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+input,select,button{font-size:15px}
+
+input,select{
+  width:100%;
+  padding:10px;
+  border:1px solid #aaa;
+  border-radius:6px;
+}
+
+button{
+  padding:10px 14px;
+  border:0;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
+  margin:4px;
+}
+
+.btn{background:#7b1e1e;color:white}
+.btn2{background:#1d4ed8;color:white}
+.btn3{background:#15803d;color:white}
+.btn5{background:#555;color:white}
+
+.summary{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.summaryBox{
+  padding:15px;
+  border-radius:8px;
+  text-align:center;
+  background:#eee;
+}
+
+.summaryBox h3{margin:0 0 8px}
+.summaryBox strong{font-size:22px}
+
+.tableWrap{overflow-x:auto}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:white;
+  min-width:850px;
+}
+
+th,td{
+  border:1px solid #777;
+  padding:8px;
+  text-align:left;
+}
+
+th{
+  background:#ddd;
+  text-align:center;
+}
+
+td.amount{text-align:right}
+
+.empty{
+  text-align:center;
+  padding:25px;
+  color:#666;
+}
+
+.viewerNotice{
+  background:#e0f2fe;
+  color:#075985;
+  padding:12px;
+  border-radius:8px;
+  margin-bottom:15px;
+  text-align:center;
+  font-weight:bold;
+  font-size:16px;
+}
+
+@media(max-width:800px){
+  .filters{grid-template-columns:1fr 1fr}
+  .summary{grid-template-columns:1fr}
+  .header h1{font-size:24px}
+  .header h2{font-size:20px}
+}
+
+@media(max-width:500px){
+  .filters{grid-template-columns:1fr}
+  .container{padding:8px}
+  button{width:100%;margin:4px 0}
+}
+
+@media print{
+  .noPrint{display:none!important}
+  body{background:white}
+  .container{max-width:none}
+  .card{box-shadow:none}
+  table{min-width:0}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="viewerNotice noPrint">
+    VIEWER MODE — केवल वित्तीय रिपोर्ट (Read Only)
+  </div>
+
+  <div class="header">
+    <h1>FINANCIAL REPORT</h1>
+    <h2>SAHI JAMA MASJID</h2>
+    <p>Financial Statement & Accounts</p>
+    <p>Address / Mobile Details</p>
+  </div>
+
+  <!-- FILTER -->
+  <div class="card noPrint">
+    <div class="filters">
+      <div>
+        <label>Financial Year</label>
+        <select id="financialYear" onchange="onFinancialYearChange()">
+          <option value="">All Years</option>
+        </select>
+      </div>
+
+      <div>
+        <label>From Date</label>
+        <input type="date" id="fromDate">
+      </div>
+
+      <div>
+        <label>To Date</label>
+        <input type="date" id="toDate">
+      </div>
+
+      <div>
+        <label>Month</label>
+        <select id="monthFilter">
+          <option value="">All Months</option>
+          <option value="0">January</option>
+          <option value="1">February</option>
+          <option value="2">March</option>
+          <option value="3">April</option>
+          <option value="4">May</option>
+          <option value="5">June</option>
+          <option value="6">July</option>
+          <option value="7">August</option>
+          <option value="8">September</option>
+          <option value="9">October</option>
+          <option value="10">November</option>
+          <option value="11">December</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="margin-top:10px;">
+      <button class="btn" onclick="applyFilters()">Apply Filter</button>
+      <button class="btn5" onclick="clearFilters()">Clear Filter</button>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="card">
+    <div class="summary">
+      <div class="summaryBox">
+        <h3>Total Income</h3>
+        <strong id="totalIncome">₹0.00</strong>
+      </div>
+
+      <div class="summaryBox">
+        <h3>Total Expenditure</h3>
+        <strong id="totalExpense">₹0.00</strong>
+      </div>
+
+      <div class="summaryBox">
+        <h3>Balance</h3>
+        <strong id="balance">₹0.00</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="card">
+    <div class="tableWrap">
+      <table id="reportTable">
+        <thead>
+          <tr>
+            <th>Sl.</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Particulars</th>
+            <th>Income (₹)</th>
+            <th>Expenditure (₹)</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+
+      <div id="emptyMessage" class="empty">
+        No financial entries found.
+      </div>
+    </div>
+  </div>
+
+  <!-- REPORTS -->
+  <div class="card noPrint">
+    <button class="btn2" onclick="window.print()">Print / Save PDF</button>
+    <button class="btn3" onclick="exportCSV()">Export CSV / Excel</button>
+  </div>
+
+</div>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDeDqQFSvXFAD9n40x6ZMO_9174goeMo_8",
+  authDomain: "financial-report-d9d09.firebaseapp.com",
+  projectId: "financial-report-d9d09",
+  storageBucket: "financial-report-d9d09.firebasestorage.app",
+  messagingSenderId: "507294834926",
+  appId: "1:507294834926:web:7d273a70885f212d5e53ff"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+let entries = [];
+let filteredEntries = [];
+
+function initFinancialYears(){
+  const select = document.getElementById("financialYear");
+  if(!select) return;
+
+  const startYear = 2015;
+  const endYear = 2099;
+
+  select.innerHTML = '<option value="">All Years</option>';
+
+  for(let y = endYear; y >= startYear; y--){
+    const nextY = String(y + 1).slice(-2);
+    const fyValue = `${y}-${nextY}`;
+    const opt = document.createElement("option");
+    opt.value = fyValue;
+    opt.textContent = fyValue;
+    select.appendChild(opt);
+  }
+}
+
+function onFinancialYearChange(){
+  const fy = document.getElementById("financialYear").value;
+  if(!fy){
+    document.getElementById("fromDate").value = "";
+    document.getElementById("toDate").value = "";
+  } else {
+    const start = fy.split("-")[0];
+    const end = Number(start) + 1;
+    document.getElementById("fromDate").value = `${start}-04-01`;
+    document.getElementById("toDate").value = `${end}-03-31`;
+  }
+  applyFilters();
+}
+
+initFinancialYears();
+
+// Realtime Listener - एडमिन के बदलते ही तुरंत अपडेट होगा
+function loadData(){
+  db.collection("financialEntries")
+    .orderBy("date", "asc")
+    .onSnapshot(function(snapshot){
+      entries = [];
+      snapshot.forEach(function(doc){
+        const data = doc.data();
+        entries.push({
+          id: doc.id,
+          date: data.date || "",
+          type: data.type || "Income",
+          particulars: data.particulars || "",
+          amount: Number(data.amount || 0),
+          remarks: data.remarks || ""
+        });
+      });
+      applyFilters();
+    }, function(error){
+      console.error(error);
+      alert("Report लोड नहीं हो सकी। कृपया इंटरनेट चेक करें।");
+    });
+}
+
+function renderTable(){
+  const tbody = document.getElementById("tableBody");
+  const empty = document.getElementById("emptyMessage");
+  tbody.innerHTML = "";
+
+  if(filteredEntries.length === 0){
+    empty.style.display = "block";
+  }else{
+    empty.style.display = "none";
+  }
+
+  let income = 0;
+  let expense = 0;
+
+  filteredEntries.forEach(function(item,index){
+    const tr = document.createElement("tr");
+    let incomeAmount = "";
+    let expenseAmount = "";
+
+    if(item.type === "Income"){
+      income += Number(item.amount);
+      incomeAmount = Number(item.amount).toFixed(2);
+    }else{
+      expense += Number(item.amount);
+      expenseAmount = Number(item.amount).toFixed(2);
+    }
+
+    tr.innerHTML = `
+      <td style="text-align:center">${index + 1}</td>
+      <td>${formatDate(item.date)}</td>
+      <td>${escapeHTML(item.type)}</td>
+      <td>${escapeHTML(item.particulars)}</td>
+      <td class="amount">${incomeAmount}</td>
+      <td class="amount">${expenseAmount}</td>
+      <td>${escapeHTML(item.remarks || "")}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  const balance = income - expense;
+  document.getElementById("totalIncome").textContent = "₹" + income.toFixed(2);
+  document.getElementById("totalExpense").textContent = "₹" + expense.toFixed(2);
+  document.getElementById("balance").textContent = "₹" + balance.toFixed(2);
+}
+
+function applyFilters(){
+  const from = document.getElementById("fromDate").value;
+  const to = document.getElementById("toDate").value;
+  const month = document.getElementById("monthFilter").value;
+
+  filteredEntries = entries.filter(function(item){
+    const d = new Date(item.date + "T00:00:00");
+    if(from && item.date < from) return false;
+    if(to && item.date > to) return false;
+    if(month !== "" && d.getMonth() !== Number(month)) return false;
+    return true;
+  });
+
+  filteredEntries.sort(function(a,b){
+    return new Date(a.date) - new Date(b.date);
+  });
+
+  renderTable();
+}
+
+function clearFilters(){
+  document.getElementById("financialYear").value = "";
+  document.getElementById("fromDate").value = "";
+  document.getElementById("toDate").value = "";
+  document.getElementById("monthFilter").value = "";
+  filteredEntries = [...entries];
+  renderTable();
+}
+
+function formatDate(date){
+  if(!date) return "";
+  const d = new Date(date + "T00:00:00");
+  return d.toLocaleDateString("en-IN", {
+    day:"2-digit",
+    month:"2-digit",
+    year:"numeric"
+  });
+}
+
+function escapeHTML(text){
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function exportCSV(){
+  if(filteredEntries.length === 0){
+    alert("No data available for export.");
+    return;
+  }
+  let csv = "Sl,Date,Type,Particulars,Income,Expenditure,Remarks\n";
+  filteredEntries.forEach(function(item,index){
+    const income = item.type === "Income" ? item.amount : "";
+    const expense = item.type === "Expenditure" ? item.amount : "";
+    csv += [
+      index + 1,
+      item.date,
+      item.type,
+      csvSafe(item.particulars),
+      income,
+      expense,
+      csvSafe(item.remarks || "")
+    ].join(",") + "\n";
+  });
+
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "Financial_Report.csv";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function csvSafe(value){
+  value = String(value).replace(/"/g, '""');
+  return '"' + value + '"';
+}
+
+loadData();
+</script>
+</body>
+</html>
