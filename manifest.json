@@ -1,20 +1,13 @@
 {
-  "name": "Financial Report - Sahi Jama Masjid",
+  "name": "Sahi Jama Masjid Financial Report",
   "short_name": "Financial Report",
-  "description": "Sahi Jama Masjid Financial Report",
-  "start_url": "./",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#0d6efd",
-  "orientation": "portrait-primary",
+  "theme_color": "#0d2b45",
   "icons": [
     {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-512.png",
+      "src": "https://drive.google.com/file/d/19RMNRh-ehHtyeLbaQ2DaBiS6dyIFtI_I/view?usp=drivesdk",
       "sizes": "512x512",
       "type": "image/png"
     }
